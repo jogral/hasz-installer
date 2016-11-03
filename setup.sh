@@ -33,6 +33,7 @@ sudo apt-get -y update
 sudo apt-get -y install emacs-snapshot\
 			default-jdk\
 			ssh\
+			ssh-askpass\
 			git\
 			scala\
 			nodejs-legacy\
