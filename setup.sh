@@ -38,6 +38,9 @@ sudo apt-get -y install emacs-snapshot\
 			nodejs-legacy\
 			npm\
 			libfontconfig\
+			libgstreamer-plugins-base0.10-0\
+			libgstreamer0.10-0\
+			libjpeg62\
 			r-base\
 			r-base-dev
 
@@ -51,13 +54,13 @@ sudo dpkg -i rstudio-1.0.44-amd64.deb
 ##### Installing Hadoop #####
 sudo addgroup hadoop
 sudo adduser --ingroup hadoop hduser
-sudo su hduser -c "ssh-keygen -t rsa -b 4096 -P \"\"; cp $HOME/.ssh/id_rsa.pub $HOME/.ssh/authorized_keys" 
+sudo su hduser -c "ssh-keygen -t rsa -b 4096 -P \"\"; cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys" 
 sudo su hduser -c "ssh localhost; exit"
 # Generate SSH key for Hadoop
 
 # Set Hadoop env variables
 set_hadoop_envvars >> $HOME/.bashrc && source $HOME/.bashrc
-sudo su hduser -c "$(set_hadoop_envvars) >> $HOME/.bashrc; source $HOME/.bashrc"
+sudo su hduser -c "$(set_hadoop_envvars) >> ~/.bashrc; source ~/.bashrc"
 
 wget http://mirrors.ibiblio.org/apache/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz
 tar xzvf hadoop-2.7.3.tar.gz
