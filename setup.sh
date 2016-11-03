@@ -135,7 +135,7 @@ if [ ! -f $HOME/Downloads/$ZEPPELIN_FILENAME ]; then
 	curl -L $ZEPPELIN_DOWNLOAD_URL -o $HOME/Downloads/$ZEPPELIN_FILENAME
 fi
 tar xzvf $HOME/Downloads/$ZEPPELIN_FILENAME
-sudo mv zeppelin-$ZEPPELIN_VER-bin-all /usr/local && sudo ln -s zeppelin-$ZEPPELIN_VER-bin-all zeppelin
+sudo mv zeppelin-$ZEPPELIN_VER-bin-all /usr/local/share && sudo ln -s zeppelin-$ZEPPELIN_VER-bin-all zeppelin
 sudo chown -R zeppelin:analysts /usr/local/share/zeppelin
 echo """
 description \"zeppelin\"
@@ -154,7 +154,6 @@ respawn limit 7 5
 chdir /usr/local/share/zeppelin
 exec bin/zeppelin-daemon.sh upstart
 """ | sudo tee /etc/init/zeppelin.conf
-sudo service zeppelin start
 }
 #-------------------------------------
 ######################################

@@ -10,6 +10,7 @@ Well, this one is easy. Simply run:
 	git clone https://github.com/makiten/dswb-installer.git
 	cd dswb-installer
 	./setup.sh
+	sudo reboot
 
 And follow the prompts that will come up, and watch it install.
 
