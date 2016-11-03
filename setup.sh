@@ -66,7 +66,7 @@ wget http://mirrors.ibiblio.org/apache/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.t
 tar xzvf hadoop-2.7.3.tar.gz
 sudo mv hadoop-2.7.3 /usr/local/share
 HADOOP_PATH=/usr/local/share/hadoop-2.7.3
-cd /usr/local/share && sudo ln -s hadoop $HADOOP_PATH && cd $HOME/Downloads
+cd /usr/local/share && sudo ln -s $HADOOP_PATH hadoop && cd $HOME/Downloads
 
 sudo echo """
 <configuration>
@@ -173,7 +173,7 @@ sudo addgroup analysts
 sudo usermod -a -G analysts $(whoami)
 wget http://d3kbcqa49mib13.cloudfront.net/spark-2.0.1-bin-hadoop2.7.tgz
 tar xzvf spark-2.0.1-bin-hadoop2.7.tgz
-sudo mv spark-2.0.1-bin-hadoop2.7 /usr/local/share; cd /usr/local/share && sudo ln -s spark $SPARK_PATH && cd $HOME/Downloads; sudo chown -R $(whoami):analysts $SPARK_PATH
+sudo mv spark-2.0.1-bin-hadoop2.7 /usr/local/share; cd /usr/local/share && sudo ln -s $SPARK_PATH spark && cd $HOME/Downloads; sudo chown -R $(whoami):analysts $SPARK_PATH
 sudo cp $SPARK_PATH/conf/spark-env.sh.template $SPARK_PATH/conf/spark-env.sh
 echo """
 JAVA_HOME=$(readlink -f /usr/bin/java | sed \"s:bin/java::\")
@@ -188,7 +188,7 @@ wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh | bash
 sudo adduser --system --ingroup analysts zeppelin
 wget http://mirrors.ibiblio.org/apache/zeppelin/zeppelin-0.6.2/zeppelin-0.6.2-bin-all.tgz
 tar xzvf zeppelin-0.6.2-bin-all.tgz
-sudo mv zeppelin-0.6.2-bin-all /usr/local && sudo ln -s zeppelin zeppelin-0.6.2-bin-all
+sudo mv zeppelin-0.6.2-bin-all /usr/local && sudo ln -s zeppelin-0.6.2-bin-all zeppelin
 sudo chown -R zeppelin:analysts /usr/local/share/zeppelin
 sudo echo """
 description \"zeppelin\"
