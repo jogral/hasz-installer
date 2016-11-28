@@ -71,13 +71,13 @@ function install_hadoop() {
 sudo addgroup hadoop
 sudo adduser --ingroup hadoop hduser
 # Generate SSH key for Hadoop
-sudo su hduser -c "ssh localhost 'exit'"
 sudo su hduser -c "ssh-keygen -t rsa -b 4096 -P \"\"; cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys" 
+sudo su hduser -c "ssh localhost 'exit'"
 
 # Set Hadoop env variables
 set_hadoop_envvars >> $HOME/.bashrc && source $HOME/.bashrc
 set_hadoop_envvars | sudo tee --append /home/hduser/.bashrc
-sudo su hduser -c "source /home/hduser/.bashrc; echo JAVA_HOME=${JAVA_HOME}"
+sudo su hduser -c "source /home/hduser/.bashrc"
 
 if [ ! -f $HOME/Downloads/$HADOOP_FILENAME ]; then
 	curl -L $HADOOP_DOWNLOAD_URL -o $HOME/Downloads/$HADOOP_FILENAME
@@ -135,7 +135,9 @@ if [ ! -f $HOME/Downloads/$ZEPPELIN_FILENAME ]; then
 	curl -L $ZEPPELIN_DOWNLOAD_URL -o $HOME/Downloads/$ZEPPELIN_FILENAME
 fi
 tar xzvf $HOME/Downloads/$ZEPPELIN_FILENAME
-sudo mv zeppelin-$ZEPPELIN_VER-bin-all /usr/local/share && sudo ln -s zeppelin-$ZEPPELIN_VER-bin-all zeppelin
+sudo mv zeppelin-$ZEPPELIN_VER-bin-all /usr/local/share
+cd /usr/local/share
+sudo ln -s zeppelin-$ZEPPELIN_VER-bin-all zeppelin
 sudo chown -R zeppelin:analysts /usr/local/share/zeppelin
 echo """
 description \"zeppelin\"
