@@ -7,8 +7,8 @@ Instructions
 ------------------------
 Well, this one is easy. Simply run:
 
-	git clone https://github.com/makiten/dswb-installer.git
-	cd dswb-installer
+	git clone https://github.com/makiten/hasz-installer.git
+	cd hasz-installer
 	./setup.sh
 	sudo reboot
 
