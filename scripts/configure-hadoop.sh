@@ -128,7 +128,7 @@ if [ ! -d $HADOOP_PATH ]; then
 	exit 1
 else
 	create_core-site | sudo tee $HADOOP_PATH/etc/hadoop/core-site.xml
-	create_core-site | sudo tee $HADOOP_PATH/etc/hadoop/hdfs-site.xml
+	create_hdfs-site | sudo tee $HADOOP_PATH/etc/hadoop/hdfs-site.xml
 	create_mapred-site | sudo tee $HADOOP_PATH/etc/hadoop/mapred-site.xml
 	create_yarn-site | sudo tee $HADOOP_PATH/etc/hadoop/yarn-site.xml
 	sudo sed -i -e "s:\${JAVA_HOME}:${JAVA_PATH}:g" $HADOOP_PATH/etc/hadoop/hadoop-env.sh
