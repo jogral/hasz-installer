@@ -19,7 +19,7 @@ echo """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 	<!-- file system properties -->
 	<property>
 		<name>fs.defaultFS</name>
-		<value>hdfs://localhost:50070/</value>
+		<value>hdfs://localhost:9000/</value>
 	</property>
 </configuration>
 """
