@@ -7,7 +7,7 @@ Instructions
 ------------------------
 Well, this one is easy. Simply run:
 
-	git clone https://github.com/makiten/hasz-installer.git
+	git clone https://github.com/jogral/hasz-installer.git
 	cd hasz-installer
 	./setup.sh
 	sudo reboot
