@@ -4,24 +4,21 @@
 ######################################
 CWD=$(pwd)
 HADOOP_MAJOR_VER="2.7"
-HADOOP_MINOR_VER="3"
+HADOOP_MINOR_VER="4"
 HADOOP_VER="${HADOOP_MAJOR_VER}.${HADOOP_MINOR_VER}"
-RSTUDIO_VER="1.0.44"
-SPARK_VER="2.0.1"
-ANACONDA3_VER="4.2.0"
-ZEPPELIN_VER="0.6.2"
+RSTUDIO_VER="xenial-1.1.383"
+SPARK_VER="2.2.0"
+ANACONDA3_VER="5.0.0.1"
 
 RSTUDIO_FILENAME="rstudio-${RSTUDIO_VER}-amd64.deb"
 HADOOP_FILENAME="hadoop-${HADOOP_VER}.tar.gz"
 SPARK_FILENAME="spark-${SPARK_VER}-bin-hadoop${HADOOP_MAJOR_VER}.tgz"
 ANACONDA3_FILENAME="Anaconda3-${ANACONDA3_VER}-Linux-x86_64.sh"
-ZEPPELIN_FILENAME="zeppelin-${ZEPPELIN_VER}-bin-all.tgz"
 
 RSTUDIO_DOWNLOAD_URL="https://download1.rstudio.org/${RSTUDIO_FILENAME}"
 HADOOP_DOWNLOAD_URL="http://mirrors.ibiblio.org/apache/hadoop/common/hadoop-${HADOOP_VER}/${HADOOP_FILENAME}"
 SPARK_DOWNLOAD_URL="http://d3kbcqa49mib13.cloudfront.net/${SPARK_FILENAME}"
 ANACONDA3_DOWNLOAD_URL="https://repo.continuum.io/archive/${ANACONDA3_FILENAME}"
-ZEPPELIN_DOWNLOAD_URL="http://mirrors.ibiblio.org/apache/zeppelin/zeppelin-${ZEPPELIN_VER}/${ZEPPELIN_FILENAME}"
 #-------------------------------------
 
 ######################################
@@ -130,32 +127,7 @@ source $HOME/.bashrc
 #-------------------------------------
 ##### Installing Apache Zeppelin #####
 function install_zeppelin() {
-sudo adduser --system --ingroup analysts zeppelin
-if [ ! -f $HOME/Downloads/$ZEPPELIN_FILENAME ]; then
-	curl -L $ZEPPELIN_DOWNLOAD_URL -o $HOME/Downloads/$ZEPPELIN_FILENAME
-fi
-tar xzvf $HOME/Downloads/$ZEPPELIN_FILENAME
-sudo mv zeppelin-$ZEPPELIN_VER-bin-all /usr/local/share
-cd /usr/local/share
-sudo ln -s zeppelin-$ZEPPELIN_VER-bin-all zeppelin
-sudo chown -R zeppelin:analysts /usr/local/share/zeppelin
-echo """
-description \"zeppelin\"
-
-start on (local-filesystems and net-device-up IFACE!=lo)
-stop on shutdown
-
-# Respawn the process on unexpected termination
-respawn
-
-# respawn the job up to 7 times within a 5 second period.
-# If the job exceeds these values, it will be stopped and marked as failed.
-respawn limit 7 5
-
-# zeppelin was installed in /usr/share/zeppelin in this example
-chdir /usr/local/share/zeppelin
-exec bin/zeppelin-daemon.sh upstart
-""" | sudo tee /etc/init/zeppelin.conf
+docker run -p 8080:8080 --rm -v $PWD/logs:/logs -v $PWD/notebook:/notebook -e ZEPPELIN_LOG_DIR='/logs' -e ZEPPELIN_NOTEBOOK_DIR='/notebook' --name zeppelin apache/zeppelin:0.7.3
 }
 #-------------------------------------
 ######################################
@@ -198,7 +170,7 @@ install_anaconda
 install_zeppelin
 
 ##### Cleanup ########################
-rm hadoop-2.7.3.tar.gz rstudio-1.0.44-amd64.deb spark-2.0.1-bin-hadoop2.7.tgz Anaconda3-4.2.0-Linux-x86_64.sh zeppelin-0.6.2-bin-all.tgz
+rm hadoop-$HADOOP_VER.tar.gz rstudio-1.0.44-amd64.deb spark-$SPARK_VER-bin-hadoop2.7.tgz Anaconda3-$ANACONDA3_VER-Linux-x86_64.sh
 cd $CWD
 
 exit 0
